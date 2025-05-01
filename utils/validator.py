@@ -34,5 +34,9 @@ def is_nip_valid(nip: str) -> bool:
     check_sum = sum(d * w for d, w in zip(digits, weights)) % 11
     return check_sum == digits[9]
 
-
-#todo add tests, add krs validator
+def is_krs_valid_length(krs: str) -> bool:
+    if len(krs) != 10:
+        return False
+    if not krs.isdigit():
+        return False
+    return True
