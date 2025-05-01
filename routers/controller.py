@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from services.gus_service import get_company_details_by_regon, get_company_details_by_nip
+from services.gus_service import get_company_details_by_regon, get_company_details_by_nip, get_company_details_by_krs
 from utils import validator
 
 router = APIRouter()
@@ -51,3 +51,15 @@ async def get_details_by_nip(number: str):
         return company_details[0]['Regon']
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@router.get("/krs/{number}", response_model=list)
+
+async def get_details_by_krs(number: str):
+    if validator.is_krs_valid_length(number) == False:
+        raise HTTPException(status_code=400, detail="Invalid KRS number length, should be 10 digits")
+    try:
+        company_details = get_company_details_by_krs(number)
+        return company_details
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
