@@ -41,3 +41,19 @@ def get_company_details_by_nip(nip_number = None) -> list:
         return result
     except Exception as e:
         raise e
+
+def get_company_details_by_krs(krs_number = None) -> list:
+    try:
+        api.authenticate(key=gus_api_key)
+    except ApiAuthenticationError as e:
+        print("[-]", e)
+        exit(0)
+    except Exception as e:
+        raise e
+    
+    try:
+        result = api.searchData(krs=krs_number)
+        print(result)
+        return result
+    except Exception as e:
+        raise e    
